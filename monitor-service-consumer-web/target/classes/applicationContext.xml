@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+           http://www.springframework.org/schema/task  
+           http://www.springframework.org/schema/task/spring-task-3.1.xsd
+           http://www.springframework.org/schema/websocket
+           http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+
+
+	<context:annotation-config />
+	<!-- 开启自动扫描 service -->
+	<context:component-scan base-package="me.*" />
+	<!-- 开启bean自动装配 -->
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+	<!-- 启用 spring 注解 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<!-- 定时任务配置 -->
+	<task:annotation-driven />
+	<!-- 引入全局工具类 -->
+	<bean id="contextHolder" class="me.utils.SpringContextHolder"></bean>
+
+	<!-- properties文件属性引入xml做配置 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+
+			<list>
+				<value>classpath:public.properties</value>
+				<value>classpath:redis.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+    <!--websocket配置 -->
+	<bean id="webSocketHandler" class="me.ws.WebSocketHandler">
+	</bean>
+
+	<websocket:handlers allowed-origins="*">
+		<websocket:mapping path="/webSocketHandler" handler="webSocketHandler" />
+		<websocket:handshake-interceptors>
+			<bean class="me.ws.WebSocketSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<!--<websocket:sockjs/> -->
+	</websocket:handlers>
+
+	<websocket:handlers>
+		<websocket:mapping path="/sockjs/webSocketHandler"
+			handler="webSocketHandler" />
+		<websocket:sockjs />
+	</websocket:handlers>
+	<bean
+		class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+		<property name="maxTextMessageBufferSize" value="65535" />
+		<property name="maxBinaryMessageBufferSize" value="65535" />
+	</bean>
+</beans>

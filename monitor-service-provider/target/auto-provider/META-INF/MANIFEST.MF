@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Built-By: ThinkPad
+Class-Path: . lib/test-service-api-0.0.1-SNAPSHOT.jar lib/spring-conte
+ xt-3.1.4.RELEASE.jar lib/spring-aop-3.1.4.RELEASE.jar lib/aopalliance
+ -1.0.jar lib/spring-beans-3.1.4.RELEASE.jar lib/spring-core-3.1.4.REL
+ EASE.jar lib/commons-logging-1.1.1.jar lib/spring-expression-3.1.4.RE
+ LEASE.jar lib/spring-asm-3.1.4.RELEASE.jar lib/javassist-3.20.0-GA.ja
+ r lib/dubbo-2.5.3.jar lib/netty-3.2.5.Final.jar lib/zookeeper-3.4.6.j
+ ar lib/slf4j-api-1.6.1.jar lib/slf4j-log4j12-1.6.1.jar lib/log4j-1.2.
+ 16.jar lib/jline-0.9.94.jar lib/netty-3.7.0.Final.jar lib/zkclient-0.
+ 1.jar lib/commons-pool-1.6.jar
+Created-By: Apache Maven 3.2.3
+Build-Jdk: 1.8.0_161
+Main-Class: com.alibaba.dubbo.container.Main
+
